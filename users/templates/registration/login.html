@@ -1,0 +1,22 @@
+<!-- 
+Когда пользователь запрашивает страницу входа, 
+Django использует свое представление login по умолчанию, 
+но мы все равно должны предоставить шаблон для этой страницы. 
+Аутентификационные представления по умолчанию ищут шаблоны в каталоге 
+с именем registration, поэтому вы должны создать этот каталог. 
+В каталоге learning_log/users/ создайте каталог с именем templates, 
+а внутри него — еще один каталог с именем registration. 
+-->
+
+{% extends "learning_logs/base.html" %}
+{% block content %}
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+<form method="post" action="{% url 'users:login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button name="submit">log in</button>
+  <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+</form>
+{% endblock content %}
