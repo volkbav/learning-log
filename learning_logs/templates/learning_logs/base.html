@@ -3,7 +3,20 @@
   <a href="{% url 'learning_logs:topics' %}">Topics</a> - 
   {% if user.is_authenticated %}
     Hello, {{ user.username }}.
-    <a href="{% url 'users:logout' %}">log out</a>
+    <!-- BEGIN
+    для кнопки ниже нужно создать вью, и прописать url
+    Это из-за того, что ссылка оправляет GET, а нужен POST.
+    Ссылка ниже выдает ошибку 405!    
+    ---- ссылка из книги
+    <a href="{% url 'users:logout' %}">log out</a> 
+    ----    
+    END -->
+    
+    <!--Эта форма работает лучше (рекомендованный вариант)-->
+    <form action="{% url 'users:logout' %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">log out</button>
+    </form>
   {% else %}
     <a href="{% url 'users:login' %}">log in</a>
   {% endif %}
